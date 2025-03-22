@@ -18,7 +18,7 @@ def generate_launch_description():
           'frame_id':'camera_link',
           'subscribe_depth':True,
           'subscribe_odom_info':True,
-          'approx_sync':False}]
+          'approx_sync':True}]
 
     remappings=[
           ('rgb/image', '/camera/color/image_raw'),
@@ -28,7 +28,7 @@ def generate_launch_description():
     return LaunchDescription([
 
         # Make sure IR emitter is enabled
-        SetParameter(name='depth_module.emitter_enabled', value=1),
+        SetParameter(name='depth_module.emitter_enabled', value=0),
 
         # Launch camera driver
         IncludeLaunchDescription(
@@ -36,7 +36,7 @@ def generate_launch_description():
                 get_package_share_directory('realsense2_camera'), 'launch'),
                 '/rs_launch.py']),
                 launch_arguments={'align_depth.enable': 'true',
-                                  'rgb_camera.profile': '640x360x30'}.items(),
+                                  'rgb_camera.profile': '640x360x6'}.items(),
         ),
 
         Node(
